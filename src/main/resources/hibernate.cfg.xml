@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+    <mapping class="model.Alert"/>
+    <mapping class="model.Configuration"/>
+    <mapping class="model.Phonebook"/>
+    <mapping class="model.Timer"/>
+    <mapping class="model.Ubication"/>
+    <mapping class="model.User"/>
+  </session-factory>
+</hibernate-configuration>
