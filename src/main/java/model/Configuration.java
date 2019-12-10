@@ -1,7 +1,6 @@
 package model;
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
