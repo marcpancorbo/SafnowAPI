@@ -1,6 +1,7 @@
 package model;
 
 public interface SafnowDao {
-    User getUser(String code);
+    User getUser(Long code);
+    <T> T getByKey(Class<T> clazz, Long code);
     void store(Object object);
 }

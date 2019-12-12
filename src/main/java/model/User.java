@@ -14,13 +14,13 @@ public class User extends Identifiable {
     private Long id;
     private String name;
     private String phoneNumber;
-    @OneToOne (cascade = CascadeType.REMOVE)
+    @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Configuration configuration;
-    @OneToOne (cascade = CascadeType.REMOVE)
+    @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Phonebook phonebook;
-    @OneToOne (cascade = CascadeType.REMOVE)
+    @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Timer timer;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Alert> alertSet;
 
 

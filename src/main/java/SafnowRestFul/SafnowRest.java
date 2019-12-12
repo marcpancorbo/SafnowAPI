@@ -1,6 +1,7 @@
 package SafnowRestFul;
 
 import model.SafnowDaoImpl;
+import model.Timer;
 import model.User;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,13 @@ public class SafnowRest {
     private SafnowDaoImpl safnowDao;
     @Path("user/{code}")
     @GET
-    public User getUser(@PathParam("code") String code){
-        return safnowDao.getUser(code);
+    public User getUser(@PathParam("code") Long code){
+        return safnowDao.getByKey(User.class,code);
+    }
+    @Path("timer/{code}")
+    @GET
+    public Timer getTimer(@PathParam("code") Long code){
+        return safnowDao.getByKey(Timer.class, code);
     }
     @Path("test")
     @GET

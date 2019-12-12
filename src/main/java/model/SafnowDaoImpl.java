@@ -2,7 +2,6 @@ package model;
 
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -14,9 +13,15 @@ public class SafnowDaoImpl implements SafnowDao {
     @PersistenceContext()
     EntityManager entityManager;
     @Override
-    public User getUser(String code) {
-        return null;
+    public User getUser(Long code) {
+        return entityManager.find(User.class,code);
     }
+
+    @Override
+    public <T> T getByKey(Class<T> clazz ,Long code) {
+        return entityManager.find(clazz,code);
+    }
+
 
     @Override
     public void store(Object object) {
