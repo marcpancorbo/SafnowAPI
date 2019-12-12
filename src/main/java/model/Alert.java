@@ -18,5 +18,10 @@ public class Alert extends Identifiable {
     @ManyToOne (cascade = CascadeType.REMOVE)
     private User user;
 
+    @PostConstruct
+    public void init(){
+        System.out.println("INIT alert");
+    }
+
 
 }
