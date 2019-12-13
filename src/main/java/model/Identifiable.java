@@ -11,8 +11,13 @@ import java.io.Serializable;
 @MappedSuperclass
 @Data
 public class Identifiable implements Serializable {
+
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    public Long getId() {
+        return id;
+    }
 
 }
