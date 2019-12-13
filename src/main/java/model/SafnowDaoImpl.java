@@ -1,29 +1,24 @@
 package model;
 
-import org.springframework.stereotype.Component;
+import controller.PersistanceController;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
 
-@Component
+@Repository
 public class SafnowDaoImpl implements SafnowDao {
     public SafnowDaoImpl(){
-        System.out.println("INIT");
-    }
-    @PersistenceContext()
-    EntityManager entityManager;
-    @Override
-    public User getUser(Long code) {
-        return entityManager.find(User.class,code);
-    }
 
+    }
+    @Inject
+    PersistanceController persist;
     @Override
     public <T> T getByKey(Class<T> clazz ,Long code) {
-        return entityManager.find(clazz,code);
+        return persist.findByKey(clazz,code);
     }
     @Override
     public void storeUser(User user) {
-        entityManager.persist(user);
+        persist.store(user);
     }
 
 }
