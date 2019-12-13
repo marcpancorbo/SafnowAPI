@@ -21,11 +21,9 @@ public class SafnowDaoImpl implements SafnowDao {
     public <T> T getByKey(Class<T> clazz ,Long code) {
         return entityManager.find(clazz,code);
     }
-
-
     @Override
-    public void store(Object object) {
-        entityManager.persist(object);
+    public void storeUser(User user) {
+        entityManager.persist(user);
     }
 
 }
