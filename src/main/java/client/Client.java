@@ -7,16 +7,15 @@ import model.User;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 public class Client {
     public static void main(String[] args) {
-        WebTarget webTarget = ClientBuilder.newClient().target("http://localhost:8080/rest/");
-        User user = new User();
-        user.setName("Name");
-        Timer timer = new Timer();
-        timer.setTime("20");
-        timer.setState(State.ENABLED);
-        user.setTimer(timer);
-        webTarget.path("store/user").request().post(Entity.json(user));
+        WebTarget webTarget = ClientBuilder.newClient().target("http://localhost:8080/rest/user/19");
+        Response response = webTarget.request().get();
+        System.out.println(response);
+        User user = response.readEntity(User.class);
+        System.out.println(user);
     }
 }
