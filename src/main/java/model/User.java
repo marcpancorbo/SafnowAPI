@@ -12,20 +12,15 @@ import java.util.List;
 @Table(name="usuario")
 public class User extends Identifiable {
     private Long id;
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     private String name;
     private String phoneNumber;
-    @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToOne (cascade = CascadeType.ALL)
     private Configuration configuration;
-    @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToOne (cascade = CascadeType.ALL)
     private Phonebook phonebook;
-    @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToOne (cascade = CascadeType.ALL)
     private Timer timer;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Alert> alertSet;
 
 

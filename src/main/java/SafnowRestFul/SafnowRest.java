@@ -3,6 +3,8 @@ package SafnowRestFul;
 import model.SafnowDaoImpl;
 import model.Timer;
 import model.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -16,6 +18,7 @@ public class SafnowRest {
 
     @Inject
     private SafnowDaoImpl safnowDao;
+
     @Path("user/{code}")
     @GET
     public User getUser(@PathParam("code") Long code){
@@ -31,11 +34,17 @@ public class SafnowRest {
     public String test(){
         return "OK";
     }
-    @Path("store/user")
+
+    /**
+     * Este método permite recibir un json con un objeto User en el body de la petición e insertarlo en la bbdd
+     * @param user
+     * @return
+     */
+    @Path("store/user/")
     @POST
-    public void storeUser(){
-        User user = new User();
-        user.setName("Paco");
+    @Consumes(MediaType.APPLICATION_JSON)
+    public ResponseEntity<Object> storeUser(User user){
         safnowDao.storeUser(user);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
