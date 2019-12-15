@@ -12,7 +12,11 @@ import javax.persistence.OneToOne;
 @Data
 @Entity
 public class Configuration extends Identifiable {
+    public Configuration() {
+
+    }
     private String propierty;
+
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
     @OneToOne(mappedBy = "configuration", cascade = CascadeType.REMOVE)

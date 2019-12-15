@@ -11,5 +11,6 @@
     <mapping class="model.Timer"/>
     <mapping class="model.Ubication"/>
     <mapping class="model.User"/>
+    <mapping class="model.Contact"/>
   </session-factory>
 </hibernate-configuration>

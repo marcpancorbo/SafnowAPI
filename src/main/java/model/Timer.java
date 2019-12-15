@@ -18,9 +18,12 @@ import javax.persistence.OneToOne;
 @Entity
 public class Timer extends Identifiable {
     public Timer() {
+        this.time = "20";
+        this.state = State.DISABLED;
     }
     private String time;
     private State state;
+
     @OneToOne(mappedBy = "timer", cascade = CascadeType.REMOVE)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id")
