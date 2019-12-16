@@ -14,13 +14,14 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="usuario")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class User extends Identifiable {
     public User() {
         this.phonebook = new Phonebook();
         this.timer = new Timer();
         this.configuration = new Configuration();
     }
-    private Long id;
     private String name;
     private String phoneNumber;
 

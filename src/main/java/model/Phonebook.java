@@ -6,17 +6,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Phonebook extends Identifiable {
     public Phonebook() {
         this.contacts = new ArrayList<>();
@@ -27,8 +29,8 @@ public class Phonebook extends Identifiable {
     @JsonBackReference
     private List<Contact> contacts;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
+
     @OneToOne(mappedBy = "phonebook", cascade = CascadeType.ALL)
+    @JsonIgnore
     private User usuario;
 }

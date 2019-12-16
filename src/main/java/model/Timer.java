@@ -1,9 +1,6 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.stereotype.Component;
@@ -16,6 +13,8 @@ import javax.persistence.OneToOne;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Timer extends Identifiable {
     public Timer() {
         this.time = "20";
@@ -25,8 +24,7 @@ public class Timer extends Identifiable {
     private State state;
 
     @OneToOne(mappedBy = "timer", cascade = CascadeType.REMOVE)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
+    @JsonIgnore
     private User usuario;
 
 }
