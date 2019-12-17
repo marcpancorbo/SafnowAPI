@@ -1,5 +1,6 @@
 package controller;
 
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
 @Component
+@Transactional
 public class PersistanceController implements PersistanceControllerDao {
     @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private  EntityManager entityManager;
@@ -16,7 +18,6 @@ public class PersistanceController implements PersistanceControllerDao {
         return entityManager.find(clazz,key);
     }
     @Override
-    @Transactional
     public void store(Object object) {
         entityManager.persist(object);
     }

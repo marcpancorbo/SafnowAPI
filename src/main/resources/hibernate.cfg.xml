@@ -5,12 +5,8 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-    <mapping class="model.Alert"/>
-    <mapping class="model.Configuration"/>
-    <mapping class="model.Phonebook"/>
-    <mapping class="model.Timer"/>
     <mapping class="model.Ubication"/>
     <mapping class="model.User"/>
-    <mapping class="model.Contact"/>
+    <mapping class="model.Alert"/>
   </session-factory>
 </hibernate-configuration>

@@ -1,8 +1,8 @@
 package SafnowRestFul;
 
 import model.SafnowDaoImpl;
-import model.Timer;
 import model.User;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,11 +24,6 @@ public class SafnowRest {
     public User getUser(@PathParam("code") Long code){
         User user =  safnowDao.getByKey(User.class,code);
         return user;
-    }
-    @Path("timer/{code}")
-    @GET
-    public Timer getTimer(@PathParam("code") Long code){
-        return safnowDao.getByKey(Timer.class, code);
     }
     @Path("test")
     @GET
