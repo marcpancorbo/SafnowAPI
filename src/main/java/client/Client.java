@@ -11,7 +11,12 @@ import javax.ws.rs.client.WebTarget;
 
 public class Client {
     public static void main(String[] args) {
-
+        WebTarget webTarget = ClientBuilder.newClient().target("http://localhost:8080/rest/user/2");
+        User user = webTarget.request().get().readEntity(User.class);
+        System.out.println(user.getName());
+        for (Alert alert : user.getAlerts()){
+            System.out.println(alert.getMessage());
+        }
     }
     public static void testStoreUser(){
         WebTarget webTarget = ClientBuilder.newClient().target("http://localhost:8080/rest/store/user");
