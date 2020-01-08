@@ -28,7 +28,7 @@ public class SafnowRest {
     @Path("test")
     @GET
     public String test(){
-        return "Pepe";
+        return "Prueba git";
     }
 
     /**
