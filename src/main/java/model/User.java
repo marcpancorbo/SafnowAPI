@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 @Table(name="usuario")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-public class User extends Identifiable {
+public class User extends Nameable {
     private String name;
     private String phoneNumber;
     @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)

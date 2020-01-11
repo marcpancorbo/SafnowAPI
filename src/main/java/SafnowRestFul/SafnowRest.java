@@ -22,8 +22,7 @@ public class SafnowRest {
     @Path("user/{code}")
     @GET
     public User getUser(@PathParam("code") Long code){
-        User user =  safnowDao.getByKey(User.class,code);
-        return user;
+        return safnowDao.getByKey(User.class,code);
     }
     @Path("test")
     @GET
