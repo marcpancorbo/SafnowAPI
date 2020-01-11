@@ -8,5 +8,6 @@
     <mapping class="model.Ubication"/>
     <mapping class="model.User"/>
     <mapping class="model.Alert"/>
+    <mapping class="model.Nameable"/>
   </session-factory>
 </hibernate-configuration>

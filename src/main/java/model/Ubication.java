@@ -16,6 +16,6 @@ import javax.persistence.OneToOne;
 public class Ubication extends Identifiable {
     private String altitude;
     private String latitude;
-    @OneToOne(mappedBy = "ubication",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "ubication")
     private Alert alert;
 }

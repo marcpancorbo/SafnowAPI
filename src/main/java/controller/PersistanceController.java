@@ -2,6 +2,7 @@ package controller;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
@@ -19,4 +20,21 @@ public class PersistanceController implements PersistanceControllerDao {
     public void store(Object object) {
         entityManager.persist(object);
     }
+
+    @Override
+    public void merge(Object object) {
+        entityManager.merge(object);
+    }
+
+    @Override
+    public void delete(Object object) {
+        entityManager.remove(object);
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return this.entityManager;
+    }
+
+
 }

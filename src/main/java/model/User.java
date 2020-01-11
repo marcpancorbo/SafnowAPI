@@ -18,10 +18,21 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name="usuario")
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "identifier" )
 public class User extends Nameable {
+
     private String name;
+    private static int code;
     private String phoneNumber;
-    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Alert> alerts = new ArrayList<>();
+
+    public User(){
+        super.setIdentifier(getClass().getSimpleName() + code++);
+    }
+    public void copy(User user){
+        name = user.name;
+        phoneNumber = user.phoneNumber;
+    }
+
 }
