@@ -16,7 +16,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-public class Alert extends Identifiable {
+public class  Alert extends Identifiable {
     private String message;
     private String phoneDest;
     @ManyToOne (cascade = CascadeType.REFRESH)

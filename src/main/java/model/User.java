@@ -28,7 +28,6 @@ public class User extends Nameable {
     private List<Alert> alerts = new ArrayList<>();
 
     public User(){
-        super.setIdentifier(getClass().getSimpleName() + code++);
     }
     public void copy(User user){
         name = user.name;

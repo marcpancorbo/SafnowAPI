@@ -8,6 +8,7 @@ import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.inject.Inject;
@@ -56,6 +57,8 @@ public class SafnowRest {
                    user1.copy(user);
                    user = user1;
                }
+            }else{
+                user.setIdentifier(safnowDao.getNextidentifier());
             }
           safnowDao.storeUser(user);
         } catch (DataIntegrityViolationException ex) {
