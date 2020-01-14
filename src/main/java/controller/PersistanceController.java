@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import java.util.List;
 
 @Component
 @Transactional
@@ -34,6 +35,11 @@ public class PersistanceController implements PersistanceControllerDao {
     @Override
     public EntityManager getEntityManager() {
         return this.entityManager;
+    }
+
+    @Override
+    public <T> List<T> find(Class<T> clazz) {
+        return entityManager.createQuery("from "+clazz.getSimpleName()).getResultList();
     }
 
 

@@ -36,6 +36,11 @@ public class SafnowDaoImpl implements SafnowDao {
     }
 
     @Override
+    public List<User> findUsers() {
+        return persist.find(User.class);
+    }
+
+    @Override
     public void storeUser(User user) {
         persist.store(user);
     }
@@ -75,4 +80,5 @@ public class SafnowDaoImpl implements SafnowDao {
         }
         return null;
     }
+
 }
