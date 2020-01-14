@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.inject.Inject;
@@ -16,6 +18,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
 
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
@@ -24,7 +27,11 @@ public class SafnowRest {
 
     @Inject
     private SafnowDaoImpl safnowDao;
-
+    @Path("user")
+    @GET
+    public List<User> findUsers(){
+        return safnowDao.findUsers();
+    }
     @Path("user/{code}")
     @GET
     public User getUser(@PathParam("code") String code) {
@@ -49,7 +56,7 @@ public class SafnowRest {
     @Path("store/user/")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void storeUser(User user) {
+    public User storeUser(User user) {
         try {
             if (user.getIdentifier() != null && user.getId() != null){
                 User user1 = getUser(user.getIdentifier());
@@ -61,6 +68,7 @@ public class SafnowRest {
                 user.setIdentifier(safnowDao.getNextidentifier());
             }
           safnowDao.storeUser(user);
+            return user;
         } catch (DataIntegrityViolationException ex) {
             throw new WebApplicationException(Response.status(Response.Status.CONFLICT).entity("Duplicated entry for " + user.getIdentifier()).build());
         }
@@ -79,4 +87,9 @@ public class SafnowRest {
     public void deleteAlert(Alert alert) {
         safnowDao.deleteAlert(alert);
     }
+
+    @Path("delete/user")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteUser(User user){safnowDao.deleteUser(user);}
 }
