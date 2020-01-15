@@ -23,6 +23,7 @@ import java.util.List;
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
 @Service
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST})
 public class SafnowRest {
 
     @Inject
