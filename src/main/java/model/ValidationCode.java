@@ -11,5 +11,5 @@ import javax.persistence.Entity;
 @Setter
 @EqualsAndHashCode
 public class ValidationCode extends Identifiable {
-    Long code;
+    String code;
 }

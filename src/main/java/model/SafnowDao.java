@@ -1,8 +1,5 @@
 package model;
 
-import org.springframework.dao.DataIntegrityViolationException;
-
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public interface SafnowDao {
@@ -13,6 +10,6 @@ public interface SafnowDao {
     void storeAlert(Alert alert);
     void deleteAlert(Alert alert);
     void deleteUser(User user);
-    ValidationCode getCode();
+    String getCode();
     String getNextidentifier();
 }

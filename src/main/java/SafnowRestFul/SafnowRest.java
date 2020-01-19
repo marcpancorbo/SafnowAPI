@@ -3,6 +3,7 @@ package SafnowRestFul;
 import model.Alert;
 import model.SafnowDaoImpl;
 import model.User;
+import model.ValidationCode;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
@@ -93,4 +94,10 @@ public class SafnowRest {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void deleteUser(User user){safnowDao.deleteUser(user);}
+    @Path("code")
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String getCode(){
+        return safnowDao.getCode();
+    }
 }

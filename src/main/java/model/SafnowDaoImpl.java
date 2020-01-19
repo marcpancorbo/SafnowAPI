@@ -1,14 +1,23 @@
 package model;
 
 import controller.PersistanceController;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
+import org.hibernate.query.Query;
+import org.hibernate.transform.Transformers;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,9 +79,10 @@ public class SafnowDaoImpl implements SafnowDao {
     }
 
     @Override
-    public ValidationCode getCode() {
-return null;
+    public String getCode() {
+        return (String) persist.getEntityManager().createNativeQuery("select code from validation_code order by rand() limit 1").getSingleResult();
     }
+
 
     @Override
     public String getNextidentifier() {
