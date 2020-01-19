@@ -9,5 +9,6 @@
     <mapping class="model.User"/>
     <mapping class="model.Alert"/>
     <mapping class="model.Nameable"/>
+    <mapping class="model.ValidationCode"/>
   </session-factory>
 </hibernate-configuration>

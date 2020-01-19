@@ -70,6 +70,11 @@ public class SafnowDaoImpl implements SafnowDao {
     }
 
     @Override
+    public ValidationCode getCode() {
+return null;
+    }
+
+    @Override
     public String getNextidentifier() {
         List<User> userList = persist.getEntityManager().createQuery("select u from User u order by identifier desc ").getResultList();
         if (userList.isEmpty()){

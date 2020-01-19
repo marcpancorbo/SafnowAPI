@@ -13,5 +13,6 @@ public interface SafnowDao {
     void storeAlert(Alert alert);
     void deleteAlert(Alert alert);
     void deleteUser(User user);
+    ValidationCode getCode();
     String getNextidentifier();
 }
