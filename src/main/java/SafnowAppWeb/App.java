@@ -1,7 +1,7 @@
 package SafnowAppWeb;
 
 import SafnowRestFul.RestfulConfig;
-import config.WebSecurityConfig;
+import security.WebSecurityConfig;
 import controller.PersistanceController;
 import model.User;
 import org.springframework.boot.SpringApplication;

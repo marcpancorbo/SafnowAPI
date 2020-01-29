@@ -11,6 +11,7 @@ import java.util.List;
 @Component
 @Transactional
 public class PersistanceController implements PersistanceControllerDao {
+  
     @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private  EntityManager entityManager;
     @Override
@@ -41,6 +42,7 @@ public class PersistanceController implements PersistanceControllerDao {
     public <T> List<T> find(Class<T> clazz) {
         return entityManager.createQuery("from "+clazz.getSimpleName()).getResultList();
     }
+
 
 
 }

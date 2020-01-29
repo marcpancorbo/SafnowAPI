@@ -3,22 +3,15 @@ package SafnowRestFul;
 import model.Alert;
 import model.SafnowDaoImpl;
 import model.User;
-import model.ValidationCode;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.relational.core.sql.In;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @Path("")
@@ -100,4 +93,5 @@ public class SafnowRest {
     public String getCode(){
         return safnowDao.getCode();
     }
+
 }

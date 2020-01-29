@@ -1,7 +1,6 @@
 package controller;
 
 import javax.persistence.EntityManager;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public interface PersistanceControllerDao {
