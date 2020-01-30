@@ -1,28 +1,33 @@
 package security;
 
 import lombok.extern.java.Log;
+import model.Authorized;
+import model.SafnowDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 @Configuration
 @Log
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter
-{
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Inject
+    SafnowDao safnowDao;
     @Bean
-    public CorsFilter corsFilter()
-    {
+    public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin(CorsConfiguration.ALL);
@@ -36,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 
         return new CorsFilter(source);
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
@@ -50,18 +56,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .addFilterBefore(new JwtFilter(),
                         UsernamePasswordAuthenticationFilter.class);
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // Creamos una cuenta de usuario por default
-        auth.inMemoryAuthentication()
-                .withUser("ask")
-                .password("{noop}123")
-                .roles("ADMIN");
+        auth.userDetailsService(userDetailsService());
     }
+
     @PostConstruct
-    private void init()
-    {
+    private void init() {
         log.info("***** WebSecurityConfig inicialitzat *****");
     }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return s -> {
+            Authorized authorized = safnowDao.findAuthorizedByUsername(s);
+            return User.withDefaultPasswordEncoder()
+                    .username(authorized.getUsername())
+                    .password(authorized.getPassword())
+                    .roles(authorized.getRole())
+                    .build();
+        };
+    }
+
 
 }

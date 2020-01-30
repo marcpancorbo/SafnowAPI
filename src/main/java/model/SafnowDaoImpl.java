@@ -17,10 +17,6 @@ public class  SafnowDaoImpl implements SafnowDao {
     }
     @Inject
     PersistanceController persist;
-    @Override
-    public <T> T getByKey(Class<T> clazz, Long identifier) {
-        return persist.findByKey(clazz, identifier);
-    }
 
     @Override
     public User getUser(String identifier) {
@@ -30,6 +26,12 @@ public class  SafnowDaoImpl implements SafnowDao {
         } catch (NoResultException ignored) {
         }
         return user;
+    }
+
+    @Override
+    public Authorized findAuthorizedByUsername(String username) {
+        Authorized authorized = (Authorized) persist.getEntityManager().createQuery("SELECT a from Authorized a where a.username = :username").setParameter("username",username).getSingleResult();
+        return authorized;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class  SafnowDaoImpl implements SafnowDao {
     @Override
     public void deleteAlert(Alert alert) {
         User user = getUser(alert.getUser().getIdentifier());
-        Alert alert1 = getByKey(Alert.class, user.getAlerts().get(0).getId());
+        Alert alert1 = persist.findByKey(Alert.class, user.getAlerts().get(0).getId());
         user.getAlerts().remove(alert1);
         persist.delete(alert1);
        }

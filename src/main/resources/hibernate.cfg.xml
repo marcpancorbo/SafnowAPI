@@ -10,5 +10,6 @@
     <mapping class="model.Alert"/>
     <mapping class="model.Nameable"/>
     <mapping class="model.ValidationCode"/>
+    <mapping class="model.Authorized"/>
   </session-factory>
 </hibernate-configuration>

@@ -1,6 +1,7 @@
 package security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import model.Authorized;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,7 +35,7 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
         // Asumimos que el body tendrá el siguiente JSON  {"username":"ask", "password":"123"}
         // Realizamos un mapeo a nuestra clase User para tener ahi los datos
-        User user = new ObjectMapper().readValue(body, User.class);
+        Authorized user = new ObjectMapper().readValue(body, Authorized.class);
 
         // Finalmente autenticamos
         // Spring comparará el user/password recibidos
@@ -59,23 +60,3 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     }
 }
 
-class User {
-    private String username;
-    private String password;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-}

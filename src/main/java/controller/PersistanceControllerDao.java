@@ -5,6 +5,7 @@ import java.util.List;
 
 public interface PersistanceControllerDao {
     <T> T findByKey(Class<T> clazz, Long key);
+    <T>Object selectByKey(Class<T> clazz, String key, Object value );
     void store(Object object);
     void merge(Object object);
     void delete(Object object);
