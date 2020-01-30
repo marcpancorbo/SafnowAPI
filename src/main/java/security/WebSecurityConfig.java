@@ -33,7 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedOrigin(CorsConfiguration.ALL);
         config.addAllowedHeader(CorsConfiguration.ALL);
         config.addAllowedMethod(CorsConfiguration.ALL);
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
@@ -46,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("rest/login").permitAll() //permitimos el acceso a /login a cualquiera
-                .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
+                .anyRequest().fullyAuthenticated() //cualquier otra peticion requiere autenticacion
                 .and()
                 // Las peticiones /login pasaran previamente por este filtro
                 .addFilterBefore(new LoginFilter("/rest/login", authenticationManager()),
@@ -68,15 +67,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         log.info("***** WebSecurityConfig inicialitzat *****");
     }
 
+
     @Bean
     public UserDetailsService userDetailsService() {
         return s -> {
             Authorized authorized = safnowDao.findAuthorizedByUsername(s);
-            return User.withDefaultPasswordEncoder()
-                    .username(authorized.getUsername())
-                    .password(authorized.getPassword())
-                    .roles(authorized.getRole())
-                    .build();
+            User user = new User(authorized.getUsername(),"{noop}"+authorized.getPassword(),authorized.getAuthorities());
+            return user;
         };
     }
 

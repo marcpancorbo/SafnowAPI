@@ -30,8 +30,7 @@ public class  SafnowDaoImpl implements SafnowDao {
 
     @Override
     public Authorized findAuthorizedByUsername(String username) {
-        Authorized authorized = (Authorized) persist.getEntityManager().createQuery("SELECT a from Authorized a where a.username = :username").setParameter("username",username).getSingleResult();
-        return authorized;
+        return (Authorized) persist.getEntityManager().createQuery("SELECT a from Authorized a where a.username = :username").setParameter("username",username).getSingleResult();
     }
 
     @Override

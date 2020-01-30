@@ -2,23 +2,30 @@ package security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Authorized;
+import model.SafnowDao;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.inject.Inject;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
+    @Inject
+    SafnowDao safnowDao;
     public LoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
@@ -36,7 +43,6 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
         // Asumimos que el body tendrá el siguiente JSON  {"username":"ask", "password":"123"}
         // Realizamos un mapeo a nuestra clase User para tener ahi los datos
         Authorized user = new ObjectMapper().readValue(body, Authorized.class);
-
         // Finalmente autenticamos
         // Spring comparará el user/password recibidos
         // contra el que definimos en la clase SecurityConfig
@@ -54,7 +60,6 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
             HttpServletRequest req,
             HttpServletResponse res, FilterChain chain,
             Authentication auth) throws IOException, ServletException {
-
         // Si la autenticacion fue exitosa, agregamos el token a la respuesta
         JwtUtil.addAuthentication(res, auth.getName());
     }
