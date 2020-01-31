@@ -13,4 +13,5 @@ public interface SafnowDao {
     String getCode();
     String getNextidentifier();
     User validateCode(String code);
+    User getUserByPhoneNumber(String phoneNumber);
 }

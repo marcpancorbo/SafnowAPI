@@ -3,9 +3,15 @@ package security;
 import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import model.SafnowDao;
+import model.SafnowDaoImpl;
+import model.User;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -17,7 +23,7 @@ import static java.util.Collections.emptyList;
 public class JwtUtil {
 
     // Método para crear el JWT y enviarlo al cliente en el header de la respuesta
-    static void addAuthentication(HttpServletResponse res, String username) throws IOException {
+     static void addAuthentication(HttpServletResponse res, String username) throws IOException {
 
         String token = Jwts.builder()
                 .setSubject(username)

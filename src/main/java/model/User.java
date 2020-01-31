@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name="usuario")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "identifier" )
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends Nameable {
 
     private String name;
@@ -24,6 +26,7 @@ public class User extends Nameable {
     private String verificationCode;
     @Column(columnDefinition = "boolean default false")
     private boolean verificated = false;
+    private String token;
     @OneToMany (mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Alert> alerts = new ArrayList<>();
 

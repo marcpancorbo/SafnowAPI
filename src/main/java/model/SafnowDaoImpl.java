@@ -97,4 +97,9 @@ public class  SafnowDaoImpl implements SafnowDao {
         return user;
     }
 
+    @Override
+    public User getUserByPhoneNumber(String phoneNumber) {
+        return (User) persist.getEntityManager().createQuery("SELECT a from User a where a.phoneNumber = :phonenumber").setParameter("phonenumber",phoneNumber).getSingleResult();
+    }
+
 }

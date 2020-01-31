@@ -19,6 +19,7 @@ import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.util.Collections;
 
 @Configuration
 @Log
@@ -77,8 +78,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         return s -> {
-            Authorized authorized = safnowDao.findAuthorizedByUsername(s);
-            User user = new User(authorized.getUsername(),"{noop}"+authorized.getPassword(),authorized.getAuthorities());
+            model.User authorized = safnowDao.getUserByPhoneNumber(s);
+            User user = new User(authorized.getPhoneNumber(),"{noop}"+authorized.getVerificationCode(), Collections.emptyList());
             return user;
         };
     }

@@ -3,6 +3,7 @@ package security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Authorized;
 import model.SafnowDao;
+import model.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,16 +25,13 @@ import java.util.List;
 
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    @Inject
-    SafnowDao safnowDao;
     public LoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
     }
 
     @Override
-    public
-    Authentication attemptAuthentication(
+    public Authentication attemptAuthentication(
             HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException, IOException, ServletException {
 
@@ -42,14 +40,14 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
         // Asumimos que el body tendrá el siguiente JSON  {"username":"ask", "password":"123"}
         // Realizamos un mapeo a nuestra clase User para tener ahi los datos
-        Authorized user = new ObjectMapper().readValue(body, Authorized.class);
+        User user = new ObjectMapper().readValue(body, User.class);
         // Finalmente autenticamos
         // Spring comparará el user/password recibidos
         // contra el que definimos en la clase SecurityConfig
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        user.getUsername(),
-                        user.getPassword(),
+                        user.getPhoneNumber(),
+                        user.getVerificationCode(),
                         Collections.emptyList()
                 )
         );
