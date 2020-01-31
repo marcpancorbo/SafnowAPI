@@ -28,10 +28,6 @@ public class  SafnowDaoImpl implements SafnowDao {
         return user;
     }
 
-    @Override
-    public Authorized findAuthorizedByUsername(String username) {
-        return (Authorized) persist.getEntityManager().createQuery("SELECT a from Authorized a where a.username = :username").setParameter("username",username).getSingleResult();
-    }
 
     @Override
     public List<User> findUsers() {
@@ -98,7 +94,7 @@ public class  SafnowDaoImpl implements SafnowDao {
     }
 
     @Override
-    public User getUserByPhoneNumber(String phoneNumber) {
+    public  User getUserByPhoneNumber(String phoneNumber) {
         return (User) persist.getEntityManager().createQuery("SELECT a from User a where a.phoneNumber = :phonenumber").setParameter("phonenumber",phoneNumber).getSingleResult();
     }
 
