@@ -12,4 +12,5 @@ public interface SafnowDao {
     void deleteUser(User user);
     String getCode();
     String getNextidentifier();
+    User validateCode(String code);
 }

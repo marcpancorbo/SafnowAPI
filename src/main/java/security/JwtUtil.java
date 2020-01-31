@@ -1,5 +1,6 @@
 package security;
 
+import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -7,6 +8,8 @@ import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 
 import static java.util.Collections.emptyList;
@@ -14,7 +17,7 @@ import static java.util.Collections.emptyList;
 public class JwtUtil {
 
     // Método para crear el JWT y enviarlo al cliente en el header de la respuesta
-    static void addAuthentication(HttpServletResponse res, String username) {
+    static void addAuthentication(HttpServletResponse res, String username) throws IOException {
 
         String token = Jwts.builder()
                 .setSubject(username)
@@ -27,7 +30,12 @@ public class JwtUtil {
                 .compact();
 
         //agregamos al encabezado el token
+        String tokenJson = new Gson().toJson(token);
+        PrintWriter out = res.getWriter();
+        res.setContentType("application/json");
         res.addHeader("Authorization", "Bearer " + token);
+        out.println(tokenJson);
+        out.flush();
     }
 
     // Método para validar el token enviado por el cliente

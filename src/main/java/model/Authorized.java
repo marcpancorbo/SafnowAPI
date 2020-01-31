@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import model.Identifiable;
@@ -16,9 +17,10 @@ import java.util.List;
 @Setter
 @Entity
 public class Authorized extends Identifiable {
-    private String ROLE_PREFIX = "ROLE_";
+    private static final String ROLE_PREFIX = "ROLE_";
     private String username;
     private String password;
+    @JsonIgnore
     private String role;
 
     public Authorized() {

@@ -11,6 +11,7 @@ import javax.ws.rs.client.WebTarget;
 
 public class Client {
     public static void main(String[] args) {
+        testStoreUser();
     }
 
     public static void testStoreUser() {

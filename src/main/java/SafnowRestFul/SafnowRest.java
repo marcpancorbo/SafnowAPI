@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -92,6 +93,16 @@ public class SafnowRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public String getCode(){
         return safnowDao.getCode();
+    }
+    @Path("code{code}")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public User validateCode(@QueryParam("code") String code){
+        User user = safnowDao.validateCode(code);
+        if (user == null){
+            throw new WebApplicationException(Response.status(Response.Status.NOT_ACCEPTABLE).entity("Error Verification").build());
+        }
+        return user;
     }
 
 }

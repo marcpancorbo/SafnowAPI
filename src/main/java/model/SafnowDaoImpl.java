@@ -91,4 +91,10 @@ public class  SafnowDaoImpl implements SafnowDao {
         return null;
     }
 
+    @Override
+    public User validateCode(String code) {
+        User user = (User) persist.getEntityManager().createQuery("select u from User u where u.verificationCode = :verificationCode").setParameter("verificationCode",code).getSingleResult();
+        return user;
+    }
+
 }
