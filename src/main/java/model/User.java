@@ -22,6 +22,7 @@ public class User extends Nameable {
 
     private String name;
     private static int code;
+    @Column(unique = true)
     private String phoneNumber;
     private String verificationCode;
     @Column(columnDefinition = "boolean default false")

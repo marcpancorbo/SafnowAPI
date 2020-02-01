@@ -1,7 +1,6 @@
 package security;
 
 import lombok.extern.java.Log;
-import model.Authorized;
 import model.SafnowDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,13 +44,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
+        http.csrf().disable().addFilter(corsFilter()).authorizeRequests()
                 .antMatchers("rest/login").permitAll()
                 .antMatchers("rest/user").hasRole("ADMIN")//permitimos el acceso a /login a cualquiera
                 //cualquier otra peticion requiere autenticacion
                 .and()
                 // Las peticiones /login pasaran previamente por este filtro
-                .addFilterBefore(new LoginFilter("/rest/login", authenticationManager()),
+                .addFilterBefore(new LoginFilter("/rest/login", authenticationManager(),safnowDao),
                         UsernamePasswordAuthenticationFilter.class)
                 // Las demás peticiones pasarán por este filtro para validar el token
                 .addFilterBefore(new JwtFilter(),

@@ -4,7 +4,6 @@ import java.util.List;
 
 public interface SafnowDao {
     User getUser(String identifier);
-    Authorized findAuthorizedByUsername(String username);
     List<User> findUsers();
     void storeUser(User user);
     void storeAlert(Alert alert);
