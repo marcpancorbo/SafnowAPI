@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("rest/login").permitAll()
                 .antMatchers("rest/user").hasRole("ADMIN")//permitimos el acceso a /login a cualquiera
-                .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
+                //cualquier otra peticion requiere autenticacion
                 .and()
                 // Las peticiones /login pasaran previamente por este filtro
                 .addFilterBefore(new LoginFilter("/rest/login", authenticationManager()),
