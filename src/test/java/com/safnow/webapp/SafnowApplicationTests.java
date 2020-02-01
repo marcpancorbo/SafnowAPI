@@ -1,16 +1,13 @@
-package SafnowAppWeb;
+package com.safnow.webapp;
 
-import SafnowRestFul.RestfulConfig;
-import SafnowRestFul.SafnowRest;
-import controller.PersistanceController;
-import model.*;
+import com.safnow.restful.RestfulConfig;
+import com.safnow.controller.PersistanceController;
+import com.safnow.model.*;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;

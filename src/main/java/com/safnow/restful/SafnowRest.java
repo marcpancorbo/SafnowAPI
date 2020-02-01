@@ -1,15 +1,14 @@
-package SafnowRestFul;
+package com.safnow.restful;
 
-import model.Alert;
-import model.SafnowDaoImpl;
-import model.User;
+import com.safnow.model.Alert;
+import com.safnow.model.SafnowDaoImpl;
+import com.safnow.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

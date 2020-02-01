@@ -1,6 +1,6 @@
-package model;
+package com.safnow.model;
 
-import controller.PersistanceController;
+import com.safnow.controller.PersistanceController;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;

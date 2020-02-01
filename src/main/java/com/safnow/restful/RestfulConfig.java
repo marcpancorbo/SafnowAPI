@@ -1,4 +1,4 @@
-package SafnowRestFul;
+package com.safnow.restful;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;

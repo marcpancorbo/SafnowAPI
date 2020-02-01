@@ -5,10 +5,10 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-    <mapping class="model.Ubication"/>
-    <mapping class="model.User"/>
-    <mapping class="model.Alert"/>
-    <mapping class="model.Nameable"/>
-    <mapping class="model.ValidationCode"/>
+    <mapping class="com.safnow.model.Ubication"/>
+    <mapping class="com.safnow.model.User"/>
+    <mapping class="com.safnow.model.Alert"/>
+    <mapping class="com.safnow.model.Nameable"/>
+    <mapping class="com.safnow.model.ValidationCode"/>
   </session-factory>
 </hibernate-configuration>

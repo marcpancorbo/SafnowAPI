@@ -1,4 +1,4 @@
-package model;
+package com.safnow.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

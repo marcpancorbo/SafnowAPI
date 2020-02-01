@@ -1,4 +1,4 @@
-package model;
+package com.safnow.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -1,8 +1,8 @@
-package client;
+package com.safnow.client;
 
-import model.Alert;
-import model.Ubication;
-import model.User;
+import com.safnow.model.Alert;
+import com.safnow.model.Ubication;
+import com.safnow.model.User;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
