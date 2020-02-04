@@ -1,4 +1,4 @@
-package security;
+package com.safnow.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

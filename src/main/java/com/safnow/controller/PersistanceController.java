@@ -1,6 +1,5 @@
-package controller;
+package com.safnow.controller;
 
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

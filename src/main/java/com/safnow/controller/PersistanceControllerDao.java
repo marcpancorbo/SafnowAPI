@@ -1,4 +1,4 @@
-package controller;
+package com.safnow.controller;
 
 import javax.persistence.EntityManager;
 import java.util.List;

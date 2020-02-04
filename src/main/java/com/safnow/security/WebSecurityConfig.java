@@ -1,7 +1,7 @@
-package security;
+package com.safnow.security;
 
 import lombok.extern.java.Log;
-import model.SafnowDao;
+import com.safnow.model.SafnowDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         return s -> {
-            model.User authorized = safnowDao.getUserByPhoneNumber(s);
+            com.safnow.model.User authorized = safnowDao.getUserByPhoneNumber(s);
             User user = new User(authorized.getPhoneNumber(),"{noop}"+authorized.getVerificationCode(), Collections.emptyList());
             return user;
         };

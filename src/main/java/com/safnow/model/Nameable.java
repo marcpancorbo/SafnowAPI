@@ -1,4 +1,4 @@
-package model;
+package com.safnow.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
