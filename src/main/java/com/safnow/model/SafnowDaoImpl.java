@@ -31,7 +31,7 @@ public class  SafnowDaoImpl implements SafnowDao {
 
     @Override
     public List<User> findUsers() {
-        return persist.find(User.class);
+        return (List<User>)persist.getEntityManager().createQuery("SELECT u from User u where u.verificated = true").getResultList();
     }
 
     @Override
