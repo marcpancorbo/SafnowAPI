@@ -2,8 +2,7 @@ package com.safnow.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import com.safnow.model.SafnowDao;
 import com.safnow.model.User;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,16 +16,21 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.security.Key;
 import java.util.Collections;
 import java.util.Date;
 
 import static java.util.Collections.emptyList;
 
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
-   private SafnowDao safnowDao;
+    private SafnowDao safnowDao;
+    private static final String KEY = "S@fn0W";
+
     public LoginFilter(String url, AuthenticationManager authManager, SafnowDao safnowDao) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
@@ -47,13 +51,17 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
         // Finalmente autenticamos
         // Spring comparará el user/password recibidos
         // contra el que definimos en la clase SecurityConfig
-        return getAuthenticationManager().authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getPhoneNumber(),
-                        user.getVerificationCode(),
-                        Collections.emptyList()
-                )
-        );
+        try {
+            return getAuthenticationManager().authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            user.getPhoneNumber(),
+                            user.getVerificationCode(),
+                            Collections.emptyList()
+                    )
+            );
+        } catch (AuthenticationException ex) {
+            throw new WebApplicationException(Response.status(Response.Status.UNAUTHORIZED).entity("Verification error").build());
+        }
     }
 
     @Override
@@ -64,23 +72,20 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
         // Si la autenticacion fue exitosa, agregamos el token a la respuesta
         addAuthentication(res, auth.getName());
     }
-     void addAuthentication(HttpServletResponse res, String username) throws IOException {
+
+
+    void addAuthentication(HttpServletResponse res, String username) throws IOException {
 
         String token = Jwts.builder()
                 .setSubject(username)
-
-                // Vamos a asignar un tiempo de expiracion de 1 minuto
-                // solo con fines demostrativos en el video que hay al final
-                .setExpiration(new Date(System.currentTimeMillis() + 60000000))
                 // Hash con el que firmaremos la clave
-                .signWith(SignatureAlgorithm.HS512, "P@tit0")
+                .signWith(SignatureAlgorithm.HS512, KEY)
                 .compact();
         String tokenJson = new Gson().toJson(token);
         PrintWriter out = res.getWriter();
         res.setContentType("application/json");
         res.addHeader("Authorization", "Bearer " + token);
         User user = safnowDao.getUserByPhoneNumber(username);
-        user.setToken(token);
         user.setVerificated(true);
         safnowDao.storeUser(user);
         out.println(tokenJson);
@@ -95,18 +100,23 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
         // si hay un token presente, entonces lo validamos
         if (token != null) {
-            String user = Jwts.parser()
-                    .setSigningKey("P@tit0")
-                    .parseClaimsJws(token.replace("Bearer", "")) //este metodo es el que valida
-                    .getBody()
-                    .getSubject();
+            try {
+                String user = Jwts.parser()
+                        .setSigningKey(KEY)
+                        .parseClaimsJws(token.replace("Bearer", "")) //este metodo es el que valida
+                        .getBody()
+                        .getSubject();
 
-            // Recordamos que para las demás peticiones que no sean /login
-            // no requerimos una autenticacion por username/password
-            // por este motivo podemos devolver un UsernamePasswordAuthenticationToken sin password
-            return user != null ?
-                    new UsernamePasswordAuthenticationToken(user, null, emptyList()) :
-                    null;
+                // Recordamos que para las demás peticiones que no sean /login
+                // no requerimos una autenticacion por username/password
+                // por este motivo podemos devolver un UsernamePasswordAuthenticationToken sin password
+                return user != null ?
+                        new UsernamePasswordAuthenticationToken(user, null, emptyList()) :
+                        null;
+            } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException ex) {
+                throw new WebApplicationException(Response.status(Response.Status.UNAUTHORIZED).entity("Verification error").build());
+            }
+
         }
         return null;
     }

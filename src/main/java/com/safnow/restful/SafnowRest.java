@@ -61,6 +61,7 @@ public class SafnowRest {
                }
             }else{
                 user.setIdentifier(safnowDao.getNextidentifier());
+                user.setVerificationCode(getCode());
             }
           safnowDao.storeUser(user);
             return user;

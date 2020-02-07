@@ -27,7 +27,6 @@ public class User extends Nameable {
     private String verificationCode;
     @Column(columnDefinition = "boolean default false")
     private boolean verificated = false;
-    private String token;
     @OneToMany (mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Alert> alerts = new ArrayList<>();
 

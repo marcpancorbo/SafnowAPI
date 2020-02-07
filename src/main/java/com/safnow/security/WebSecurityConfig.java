@@ -45,8 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().addFilter(corsFilter()).authorizeRequests()
-                .antMatchers("rest/login").permitAll()
-                .antMatchers("rest/user").hasRole("ADMIN")//permitimos el acceso a /login a cualquiera
+                .antMatchers("/rest/store/user").permitAll()
                 .anyRequest().authenticated()//cualquier otra peticion requiere autenticacion
                 .and()
                 // Las peticiones /login pasaran previamente por este filtro
