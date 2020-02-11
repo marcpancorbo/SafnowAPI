@@ -87,7 +87,6 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
         res.addHeader("Authorization", "Bearer " + token);
         User user = safnowDao.getUserByPhoneNumber(username);
         user.setVerificated(true);
-        safnowDao.storeUser(user);
         out.println(tokenJson);
         out.flush();
     }
